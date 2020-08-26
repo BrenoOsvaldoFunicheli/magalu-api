@@ -1,4 +1,9 @@
 from validate_email import validate_email
 
-is_valid = validate_email('example@example.com')
-print(is_valid)
+class EmailValidator:
+
+    def __init__(self, email):
+        self.email = email
+
+    def is_valid(self):
+        return validate_email(self.email)

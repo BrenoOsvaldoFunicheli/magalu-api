@@ -9,4 +9,4 @@ class SendRequestSerializer(ModelSerializer):
 
     class Meta:
         model = SendRequest
-        fields = ['id', 'scheduled_time', 'recipient','type_message', 'msg']
+        fields = ['id', 'scheduled_time', 'recipient','kind_message', 'msg']

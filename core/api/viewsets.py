@@ -1,10 +1,12 @@
-# my app imports
-from core.models import  SendRequest
-from .serializers import SendRequestSerializer
+# app imports
+from core.models import SendRequest
+from core.api.serializers import SendRequestSerializer
+from core.api.handler import SendRequestHandler
 
 # django rest imports
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+
 
 class SendRequestViewSet(ModelViewSet):
 
@@ -34,6 +36,12 @@ class SendRequestViewSet(ModelViewSet):
 
     def create(self, request):
         data = request.data
+
+        handler = SendRequestHandler(data)
+
+        response = handler.create_object()
         
-        return Response({'ok':'ok'})
-        
+        if(response.status):
+            return Response(SendRequestSerializer(response.data).data)
+
+        return Response({"Error": response.complement})

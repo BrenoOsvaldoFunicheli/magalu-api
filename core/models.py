@@ -6,11 +6,15 @@ from django.contrib.auth.models import User
 
 
 class SendRequest(models.Model):
-    TYPE_MESSAGE = (
-        ('SMS','sms'),
-        ('WTA','whatsapp'),
-        ('PSH','push'),
-        ('EML','e-mail')
+    KIND_MESSAGE = (
+        ('SMS', 'sms'),
+        ('WTA', 'whatsapp'),
+        ('PSH', 'push'),
+        ('EML', 'e-mail')
+    )
+
+    MESSAGE_STATUS = (
+        ('E', 'sented'), ('W', 'waiting')
     )
 
     sender = models.ForeignKey(
@@ -18,5 +22,9 @@ class SendRequest(models.Model):
     recipient = models.CharField(max_length=200)
     scheduled_time = models.DateTimeField(auto_now_add=True, blank=True)
     request_date = models.DateTimeField(auto_now_add=True, blank=True)
-    type_message = models.CharField(max_length=3,choices=TYPE_MESSAGE)
+    kind_message = models.CharField(max_length=3, choices=KIND_MESSAGE)
     msg = models.TextField()
+    status = models.CharField(max_length=20, choices=KIND_MESSAGE, default='W')
+
+    def __str__(self):
+        return self.recipient
