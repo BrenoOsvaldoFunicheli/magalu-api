@@ -17,7 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# django rest framework
+from rest_framework import routers
+
+#my imports
+from core.api.viewsets import SendRequestViewSet
+
+router = routers.DefaultRouter()
+router.register(r'sendrequest', SendRequestViewSet, basename='sendrequest')
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('core.urls'))
+    path('api/v1/', include(router.urls)),
 ]

@@ -5,7 +5,7 @@ services:
     app:
       build: .
       container_name: app
-      command: python manage.py runserver 0.0.0.0:8002
+      command: bash docker-entrypoint.sh
       volumes:
         - .:/home/django/app
       ports:
