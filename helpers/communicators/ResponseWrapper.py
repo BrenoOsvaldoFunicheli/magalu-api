@@ -10,4 +10,4 @@ class SimpleResponse:
         pass
 
     def __repr__(self):
-        return str(self.status)
+        return self.status

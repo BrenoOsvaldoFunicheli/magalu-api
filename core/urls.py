@@ -23,9 +23,17 @@ from rest_framework import routers
 #my imports
 from core.api.viewsets import SendRequestViewSet
 
+#   jwt imports
+from rest_framework_simplejwt import views as jwt_views
+
+#   registry to implement API
 router = routers.DefaultRouter()
 router.register(r'sendrequest', SendRequestViewSet, basename='sendrequest')
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
+    path('api/v1/login/', jwt_views.TokenObtainPairView.as_view(),
+         name='token_obtain_pair'),
+    path('api/v1/login/refresh/', jwt_views.TokenRefreshView.as_view(),
+         name='token_refresh'),    
 ]

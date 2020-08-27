@@ -24,7 +24,13 @@ class SendRequest(models.Model):
     request_date = models.DateTimeField(auto_now_add=True, blank=True)
     kind_message = models.CharField(max_length=3, choices=KIND_MESSAGE)
     msg = models.TextField()
-    status = models.CharField(max_length=20, choices=KIND_MESSAGE, default='W')
+    status = models.CharField(max_length=20, choices=MESSAGE_STATUS, default='W')
 
     def __str__(self):
         return self.recipient
+
+    def status_full(self):
+        if self.status == "W":
+            return "waiting"
+        else:
+            return "sented"
