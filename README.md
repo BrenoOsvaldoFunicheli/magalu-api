@@ -161,7 +161,7 @@ So when you access token through the url [uri]/api/v1/[resource] you can get two
 
 ## :ticket: API Consuming
 
-The API consuming were detailed on the postman collection, that implements all steps to consuming and explain some steps to use. The ordering of steps need to be follow, because you need authentication before consuming. The collection link is 
+The API consuming were detailed on the postman collection, that implements all steps to consuming and explain some steps to use. The ordering of steps need to be follow, because you need authentication before consuming. The collection link is https://documenter.getpostman.com/view/8382418/TVCb4AeP
 
 ### Example of the code to create super user
 
