@@ -7,7 +7,7 @@ A complete implementation of RESTful API to store and consume some structures th
 ## Sections
 
 * :scroll: [Patterns](#scroll-patterns) (optional)
-* :blue_book: [Requirements and Model](#blue_book-requirements-and-model)
+* :blue_book: [Requirements](#blue_book-requirements)
 * :postbox: [Testing](#postbox-testing)
 * :wrench: [Building App](#wrench-building-app)
 * :key: [Authentication](#key-authentication)
