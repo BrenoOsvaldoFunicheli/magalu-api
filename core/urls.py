@@ -20,7 +20,7 @@ from django.urls import path, include
 # django rest framework
 from rest_framework import routers
 
-#my imports
+# my imports
 from core.api.viewsets import SendRequestViewSet
 
 #   jwt imports
@@ -32,8 +32,9 @@ router.register(r'sendrequest', SendRequestViewSet, basename='sendrequest')
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
+    path('', include('users.urls')),
     path('api/v1/login/', jwt_views.TokenObtainPairView.as_view(),
          name='token_obtain_pair'),
     path('api/v1/login/refresh/', jwt_views.TokenRefreshView.as_view(),
-         name='token_refresh'),    
+         name='token_refresh'),
 ]
