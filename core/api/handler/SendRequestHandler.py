@@ -66,6 +66,21 @@ class SendRequestHandler:
         return all(conditions)
 
     def create_object(self):
+        #   remove csrf token to make object
+        self.snd_request.pop('csrfmiddlewaretoken', None)
+        sender = self.snd_request.pop('sender', None)
+
+        # make object to send
+        obj = SendRequest.objects.create(**self.snd_request)
+
+        # make record creator
+        obj.sender = sender
+        
+        obj.save()
+
+        return obj
+
+    def try_create_object(self):
         """
             Description
             -----------
@@ -85,20 +100,20 @@ class SendRequestHandler:
         ]
 
         if self.is_valid(conditions):
-            #   remove csrf token to make object
-            self.snd_request.pop('csrfmiddlewaretoken', None)
-
-            # make object to send
-            obj = SendRequest(**self.snd_request)
-
-            obj.save()
+            obj = self.create_object()
 
             return SimpleResponse(True, obj)
         else:
             return SimpleResponse(False, complement="Some of fields isn't valid")
 
     def get_need_conditions(self):
+        """
+            Description
+            -----------
+                This method verify which conditions
+                need to be validated
 
+        """
         conditions = [True]
 
         if self.snd_request.get("recipient", False) or self.snd_request.get("kind_message", False):
@@ -107,7 +122,6 @@ class SendRequestHandler:
         if self.snd_request.get("scheduled_time", False):
             conditions.append(self.validators.get("scheduled")())
 
-        
         return conditions
 
     def try_update_object(self, pk):
@@ -119,9 +133,9 @@ class SendRequestHandler:
 
         """
         conditions = self.get_need_conditions()
-        
+
         if self.is_valid(conditions):
-            
+
             try:
                 send_object = get_object_or_404(SendRequest, pk=pk)
 
@@ -133,13 +147,13 @@ class SendRequestHandler:
 
                     send_request.update(**self.snd_request)
 
-                    return SimpleResponse(status=True, complement="Object Alter")
+                    return SimpleResponse(status=200, complement="Object Alter")
                 else:
                     raise Exception("This object is done, you cannot modify")
             except Exception as e:
-                return SimpleResponse(False, complement=str(e))
+                return SimpleResponse(status=404, complement=str(e))
 
-        return SimpleResponse(False, complement="This object isn't valid") 
+        return SimpleResponse(status=404, complement="This object isn't valid")
 
     def remove_url_params(self, params=[]):
         """

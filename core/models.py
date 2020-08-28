@@ -17,6 +17,10 @@ class SendRequest(models.Model):
         ('E', 'sented'), ('W', 'waiting')
     )
 
+    RECORD_STATUS = (
+        ('A', 'actived'), ('D', 'deleted')
+    )
+
     sender = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL)
     recipient = models.CharField(max_length=200)
@@ -25,6 +29,7 @@ class SendRequest(models.Model):
     kind_message = models.CharField(max_length=3, choices=KIND_MESSAGE)
     msg = models.TextField()
     status = models.CharField(max_length=20, choices=MESSAGE_STATUS, default='W')
+    record_status = models.CharField(max_length=20, choices=RECORD_STATUS, default='A')
 
     def __str__(self):
         return self.recipient
